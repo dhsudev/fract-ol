@@ -6,12 +6,13 @@
 #    By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/25 15:40:29 by ltrevin-          #+#    #+#              #
-#    Updated: 2024/06/25 16:11:06 by ltrevin-         ###   ########.fr        #
+#    Updated: 2024/07/19 12:47:49 by ltrevin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Program name
 NAME	= fractol
+
 
 # Compiler
 CC		= gcc
