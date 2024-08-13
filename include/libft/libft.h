@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 18:04:29 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/07/15 16:24:04 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:59:59 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "./get_next_line/get_next_line.h"
+# include "./ft_printf/include/ft_printf.h"
 
 int					ft_isalnum(char c);
 int					ft_isalpha(int c);

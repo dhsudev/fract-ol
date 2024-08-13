@@ -6,9 +6,21 @@
 #    By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/25 15:40:29 by ltrevin-          #+#    #+#              #
-#    Updated: 2024/07/19 13:07:30 by ltrevin-         ###   ########.fr        #
+#    Updated: 2024/08/14 00:27:26 by ltrevin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
+########## COLORS
+RESET   		= \033[0m
+BLACK   		= \033[0;30m
+RED     		= \033[0;31m
+GREEN   		= \033[0;32m
+YELLOW  		= \033[0;33m
+BLUE    		= \033[0;34m
+MAGENTA 		= \033[0;35m
+CYAN   			= \033[0;36m
+WHITE   		= \033[0;37m
 
 #Program name
 NAME	= fractol
@@ -42,7 +54,7 @@ OBJ_PATH	= obj/
 OBJ			= $(SRC:.c=.o)
 OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
 
-all: $(MLX) $(LIBFT) $(NAME)
+all: banner $(MLX) $(LIBFT) $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
@@ -82,5 +94,22 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all re clean fclean
+banner:
+	@echo "\n$(CYAN)==============${BLUE} Welcome to Lua's Minitalk $(CYAN)==============$(RESET)"
+	@echo "	$(MAGENTA)	⠀⠀⠀⠀⠀⠀⠀⢀⣀⡤⠴⠶⠶⠒⠲⠦⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo '		⠀⠀⠀⠀⢀⡠⠞⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠲⠤⣄⡀⠀⠀⠀⠀⠀'
+	@echo '		⠀⠀⣀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡿⠀⠀⠀⠀⠀'
+	@echo '		⠀⢾⣅⡀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⢀⡦⠤⠄⠀⠀⢻⡀⠀⠀⠀⠀⠀'
+	@echo '		⠀⠈⢹⡏⠀⠀⠐⠋⠉⠁⠀⠻⢿⠟⠁⠀⠀⢤⠀⠀⠠⠤⢷⣤⣤⢤⡄⠀'
+	@echo '		⠀⠀⣼⡤⠤⠀⠀⠘⣆⡀⠀⣀⡼⠦⣄⣀⡤⠊⠀⠀⠀⠤⣼⠟⠀⠀⢹⡂'
+	@echo '		⠀⠊⣿⡠⠆⠀⠀⠀⠈⠉⠉⠙⠤⠤⠋⠀⠀⠀⠀⠀⠀⡰⠋⠀⠀⠀⡼⠁'
+	@echo '		⠀⢀⡾⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠜⠁⠀⠀⠀⣸⠁⠀'
+	@echo '		⠀⠀⠀⡼⠙⠢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠃⠀⠀'
+	@echo '		⠀⢀⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠃⠀⠀⠀'
+	@echo '		⠀⡼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀'
+	@echo '		⣾⠁⠀⢀⣠⡴⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀'
+	@echo "		⠈⠛⠻⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀$(RESET)"
+
+
+.PHONY: all re clean fclean banner
 
