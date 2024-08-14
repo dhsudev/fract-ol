@@ -6,7 +6,7 @@
 #    By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/25 15:40:29 by ltrevin-          #+#    #+#              #
-#    Updated: 2024/08/14 00:27:26 by ltrevin-         ###   ########.fr        #
+#    Updated: 2024/08/14 01:16:30 by ltrevin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,9 @@ OBJ_PATH	= obj/
 OBJ			= $(SRC:.c=.o)
 OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
 
-all: banner $(MLX) $(LIBFT) $(NAME)
+all: banner $(MLX) $(LIBFT) $(NAME) 
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c Makefile include/fractol.h
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(OBJS): $(OBJ_PATH)
@@ -72,7 +72,7 @@ $(MLX):
 
 $(LIBFT):
 	@echo "Making libft..."
-	@make -C $(LIBFT_PATH) --no-print-directory
+	@make -C $(LIBFT_PATH) bonus --no-print-directory
 
 $(NAME): $(OBJS)
 	@echo "Compiling fractol..."
