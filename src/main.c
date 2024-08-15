@@ -6,79 +6,77 @@
 /*   By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:34:49 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/08/14 01:13:56 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/08/15 22:08:20 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
-typedef struct s_mlx_img
+static t_fractal	*get_fractals(void)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_mlx_img;
-typedef struct s_mlx_data
-{
-    void		*mlx;
-    void		*window;
-	t_mlx_img	*img;
-}               t_mlx_data;
+	static t_fractal	array[3] = {{"mandelbrot", 0}, {"julia", 1}, {NULL, 0}};
 
-
-int	handle_input(int keysym, t_mlx_data *data)
-{
-    if (keysym == ESC)
-    {
-        ft_printf("The %d key (ESC) has been pressed\n\n", keysym);
-        mlx_destroy_window(data->mlx, data->window);
-        mlx_destroy_display(data->mlx);
-        free(data->mlx);
-        exit(1);
-    }
-    ft_printf("The %d key has been pressed\n\n", keysym);
-    return (0);
+	return (array);
 }
 
-static int deivid_was_here(void *param)
+static t_fractal	fractal_match(char *str)
 {
-	(void)param;
-	exit(2);
+	t_fractal	*f;
+	int			i;
+
+	f = get_fractals();
+	i = 0;
+	while (f[i].name != NULL)
+	{
+		if (ft_strcmp(f[i].name, str) == 0)
+			return (f[i]);
+		i++;
+	}
+	return (f[i]);
 }
 
-void	my_mlx_pixel_put(t_mlx_img *data, int x, int y, int color)
+int	die(char *message, int error)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (error == 0)
+		ft_printf(RED "Error: " RESET "%s\n", message);
+	else
+		exit(0);
+	exit(1);
 }
-int main(void)
+
+void	render(t_mlx_data *data, t_mlx_img *img)
 {
-	t_mlx_data data;
-	t_mlx_img img;
+	img->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
+	my_mlx_pixel_put(img, 5, 5, 0x00FF0088);
+	mlx_put_image_to_window(data->mlx, data->window, img->img, 0, 0);
+}
 
+int	main(int argc, char **argv)
+{
+	t_mlx_data	data;
+	t_mlx_img	img;
+	t_fractal	fractal;
 
+	if (argc < 2)
+		die(ERROR_MSG, 0);
+	fractal = fractal_match(argv[1]);
+	if (!fractal.name)
+		die(ERROR_MSG, 0);
 	data.mlx = mlx_init();
-	if(!data.mlx)
-		return(1);
-	data.window = mlx_new_window(data.mlx, 
-								WIDTH, HEIGHT, "Fractol by lua");
-	if(!data.window)
+	if (!data.mlx)
+		return (1);
+	data.window = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Fractol by lua");
+	if (!data.window)
 	{
 		mlx_destroy_display(data.mlx);
 		free(data.mlx);
-		return(1);
+		return (1);
 	}
-	mlx_hook(data.window, 17, 0L, &deivid_was_here, &data);
-	mlx_key_hook(data.window, handle_input, &data);
-	img.img = mlx_new_image(data.mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	data.img = &img;
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0088);
-	mlx_put_image_to_window(data.mlx, data.window, img.img, 0, 0);
+	mlx_hook(data.window, 17, 0L, &die, &data);
+	mlx_key_hook(data.window, handle_keys, &data);
+	render(&data, &img);
 	mlx_loop(data.mlx);
+	return (0);
 }

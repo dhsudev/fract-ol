@@ -6,7 +6,7 @@
 #    By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/25 15:40:29 by ltrevin-          #+#    #+#              #
-#    Updated: 2024/08/14 01:16:30 by ltrevin-         ###   ########.fr        #
+#    Updated: 2024/08/15 20:08:39 by ltrevin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ NAME	= fractol
 
 # Compiler
 CC		= gcc
-CFLAGS	= -Werror -Wextra -Wall
+CFLAGS	= -Werror -Wextra -Wall -g -fsanitize=address
 
 # Minilibx
 MLX_PATH	= include/minilibx-linux/
@@ -46,7 +46,7 @@ INC			=	-I ./include/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	main.c	
+SRC			=	main.c math_utils.c mlx_utils.c 
 SRCS		= $(addprefix $(SRC_PATH), $(SRC))
 
 # Objects
@@ -95,7 +95,7 @@ fclean: clean
 re: fclean all
 
 banner:
-	@echo "\n$(CYAN)==============${BLUE} Welcome to Lua's Minitalk $(CYAN)==============$(RESET)"
+	@echo "\n$(CYAN)==============${BLUE} Welcome to Lua's Fract-ol $(CYAN)==============$(RESET)"
 	@echo "	$(MAGENTA)	⠀⠀⠀⠀⠀⠀⠀⢀⣀⡤⠴⠶⠶⠒⠲⠦⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo '		⠀⠀⠀⠀⢀⡠⠞⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠲⠤⣄⡀⠀⠀⠀⠀⠀'
 	@echo '		⠀⠀⣀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡿⠀⠀⠀⠀⠀'

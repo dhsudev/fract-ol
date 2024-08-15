@@ -6,21 +6,76 @@
 /*   By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:29:11 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/08/14 01:15:08 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/08/15 22:09:52 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
+# include "minilibx-linux/mlx.h"
 # include <stdio.h>
-# define WIDTH			1800
-# define HEIGHT			900
-# define ESC			65307
 
+// WINDOW INFO
+# define WIDTH 1000
+# define HEIGHT 1000
 
+// Currently running fractal info
+typedef struct s_fractal
+{
+	char		*name;
+	int			mouse;
+}				t_fractal;
+
+typedef struct s_mlx_img
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_mlx_img;
+
+// MLX stuff
+typedef struct s_mlx_data
+{
+	void		*mlx;
+	void		*window;
+	t_mlx_img	*img;
+}				t_mlx_data;
+
+void			my_mlx_pixel_put(t_mlx_img *data, int x, int y, int color);
+int				handle_keys(int keysym, t_mlx_data *data);
+
+// Math stuff
+typedef struct s_complex
+{
+	double		x;
+	double		y;
+}				t_complex;
+t_complex		power(t_complex z);
+t_complex		sum(t_complex z1, t_complex z2);
+double			map(double n, double new_min, double new_max, double prev_min,
+					double prev_max);
+
+// KEYS
+# define ESC 65307
+
+// RGB COLORS
+# define RBG_WHITE 0x000000
+# define RGB_BLACK 0xFFFFFF
+
+// COLOR ESCAPE CODES
+# define RESET "\033[0m"
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE "\033[0;34m"
+# define MAGENTA "\033[0;35m"
+# define CYAN "\033[0;36m"
+# define WHITE "\033[0;37m"
+# define ERROR_MSG "Invalid arguments\nAvalible fractals are: \
+		\n\t" CYAN "~"RESET " julia " YELLOW "{start x} {start y}" RESET "\
+		\n\t" CYAN "~"RESET " mandelbrot"
 #endif
-
-
