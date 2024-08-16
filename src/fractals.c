@@ -6,18 +6,18 @@
 /*   By: ltrevin- <ltrevin-@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:37:28 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/08/16 03:11:32 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:59:45 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fractol.h"
 
 static void	set_c(t_complex *z, t_complex *c, t_fractal *fractal)
-{	
+{
 	if (!ft_strcmp(fractal->name, "julia"))
 	{
-		c->x = fractal->c_julia->x;
-		c->y = fractal->c_julia->y;
+		c->x = fractal->c_julia_x;
+		c->y = fractal->c_julia_y;
 	}
 	else
 	{
@@ -26,20 +26,24 @@ static void	set_c(t_complex *z, t_complex *c, t_fractal *fractal)
 	}
 }
 
-/*static int get_color(int iterations, int max_iterations, int base_color)
+static int	get_color(int iterations, int i)
 {
-	int red;
-	int blue;
-	int green;
-	int color;
+	t_rgb	color;
+	int		final_color;
 
-	red = (base_color >> 16) & 0xFF;
-	green = (base_color >> 8) & 0xFF;
-    blue = base_color & 0xFF;
-	color = red | green | blue;
-	color = map(iterations, RGB_BLACK, RGB_WHITE, 0, max_iterations);
-	return (color);
-}*/
+	iterations += i;
+	color.r = (iterations * 8) % 256;
+	color.g = (iterations * 4) % 256;
+	color.b = (iterations * 2) % 256;
+	if (iterations % 2 == 0)
+		color.r = 255 - color.r;
+	if (iterations % 3 == 0)
+		color.g = 255 - color.g;
+	if (iterations % 5 == 0)
+		color.b = 255 - color.b;
+	final_color = (color.r << 16) | (color.g << 8) | color.b;
+	return (final_color);
+}
 
 /*
  * Paints the pixel depending of the iterations and the fractal.
@@ -51,48 +55,43 @@ static void	set_c(t_complex *z, t_complex *c, t_fractal *fractal)
  *
  *  Then we use pitagoras to know if its outbounded
  */
-static void pixel_calc(int x, int y, t_fractal *fractal)
+static void	pixel_calc(int x, int y, t_fractal *fractal)
 {
-	t_complex z;
-	t_complex c;
-	int i;
-	//int color;
+	t_complex	z;
+	t_complex	c;
+	int			i;
+	int			color;
 
-	z.x = (map(y, -2, +2, 0, WIDTH) * fractal->zoom);
-	z.y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom);
-
+	z.x = (map(x, -2, +2, WIDTH) * fractal->zoom);
+	z.y = (map(y, +2, -2, HEIGHT) * fractal->zoom);
 	set_c(&z, &c, fractal);
-	ft_printf("(%d,%d)\n", x , y);
-	while(i < fractal->iterations)
+	i = 0;
+	while (i < fractal->iterations)
 	{
 		z = sum(power(z), c);
-		if((z.x * z.x) + (z.y * z.y) > OUTBOUNDED)
+		if ((z.x * z.x) + (z.y * z.y) > OUTBOUNDED)
 		{
-			//color = get_color(i, fractal->iterations, fractal->base_color);
-			my_mlx_pixel_put(fractal->img, x, y, RGB_BLACK);
+			color = get_color(fractal->iterations, i);
+			my_mlx_pixel_put(fractal->img, x, y, color);
 			return ;
 		}
 		i++;
 	}
-
-	my_mlx_pixel_put(fractal->img, x, y, RGB_WHITE);
+	my_mlx_pixel_put(fractal->img, x, y, fractal->base_color);
 }
-
 
 void	pixel_populate(t_fractal *fractal)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	x = -1;
-	while (++x <= WIDTH)
+	while (++x < WIDTH)
 	{
 		y = -1;
-		while (++y <= HEIGHT)
+		while (++y < HEIGHT)
 			pixel_calc(x, y, fractal);
 	}
-	mlx_put_image_to_window(fractal->data->mlx,
-							fractal->data->window,
-							fractal->img,
-							0, 0);
+	mlx_put_image_to_window(fractal->data->mlx, fractal->data->window,
+		fractal->img->img, 0, 0);
 }

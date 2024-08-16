@@ -6,7 +6,7 @@
 #    By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/25 15:40:29 by ltrevin-          #+#    #+#              #
-#    Updated: 2024/08/16 02:33:30 by ltrevin-         ###   ########.fr        #
+#    Updated: 2024/08/16 19:39:44 by ltrevin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ NAME	= fractol
 
 # Compiler
 CC		= gcc
-CFLAGS	= -Werror -Wextra -Wall -g -fsanitize=address
+CFLAGS	= -Werror -Wextra -Wall #-g -fsanitize=address
 
 # Minilibx
 MLX_PATH	= include/minilibx-linux/
@@ -46,7 +46,7 @@ INC			=	-I ./include/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	main.c math_utils.c mlx_utils.c fractals.c 
+SRC			=	main.c math_utils.c mlx_utils.c fractals.c init.c 
 SRCS		= $(addprefix $(SRC_PATH), $(SRC))
 
 # Objects
