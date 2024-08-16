@@ -6,7 +6,7 @@
 /*   By: ltrevin- <ltrevin-@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 20:09:17 by ltrevin-          #+#    #+#             */
-/*   Updated: 2024/08/15 21:51:16 by ltrevin-         ###   ########.fr       */
+/*   Updated: 2024/08/16 00:01:02 by ltrevin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_complex	sum(t_complex z1, t_complex z2)
 
 /*
  * Makes the power of a complex number
- * 	~ the real part is x^2 - y^2
- * 	~ the imaginary part is 2xy
+ * 	~ the real (x) part is x^2 - y^2
+ * 	~ the imaginary (yi) part is 2xy
  *	
  *	that's because: 
  *		(x + yi)*(x + yi)

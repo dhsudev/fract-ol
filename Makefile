@@ -6,7 +6,7 @@
 #    By: ltrevin- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/25 15:40:29 by ltrevin-          #+#    #+#              #
-#    Updated: 2024/08/15 20:08:39 by ltrevin-         ###   ########.fr        #
+#    Updated: 2024/08/16 02:33:30 by ltrevin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ INC			=	-I ./include/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	main.c math_utils.c mlx_utils.c 
+SRC			=	main.c math_utils.c mlx_utils.c fractals.c 
 SRCS		= $(addprefix $(SRC_PATH), $(SRC))
 
 # Objects
@@ -63,8 +63,6 @@ $(OBJS): $(OBJ_PATH)
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
-	@mkdir $(OBJ_PATH)fractal_sets/
-	@mkdir $(OBJ_PATH)color_schemes/
 
 $(MLX):
 	@echo "Making MiniLibX..."
